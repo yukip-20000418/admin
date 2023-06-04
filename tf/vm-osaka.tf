@@ -4,29 +4,6 @@ resource "google_service_account" "osaka" {
   depends_on = [google_project_service.iam]
 }
 
-#############
-# gcloud compute instances create-with-container instance-2 \
-#     --project=dev-chottodake-admin \
-#     --zone=asia-northeast2-a \
-#     --machine-type=n1-standard-1 \
-#     --network-interface=network-tier=PREMIUM,stack-type=IPV4_ONLY,subnet=default \
-#     --maintenance-policy=MIGRATE \
-#     --provisioning-model=STANDARD \
-#     --service-account=954218371077-compute@developer.gserviceaccount.com \
-#     --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append \
-#     --image=projects/cos-cloud/global/images/cos-stable-105-17412-101-4 \
-#     --boot-disk-size=10GB \
-#     --boot-disk-type=pd-standard \
-#     --boot-disk-device-name=instance-2 \
-
-#     --container-image=docker.io/hashicorp/terraform \
-#     --container-restart-policy=always \
-#     --no-shielded-secure-boot \
-#     --shielded-vtpm \
-#     --shielded-integrity-monitoring \
-#     --labels=goog-ec-src=vm_add-gcloud,container-vm=cos-stable-105-17412-101-4
-#############
-
 # compute instance
 resource "google_compute_instance" "osaka" {
   name = "osaka"
@@ -44,8 +21,46 @@ resource "google_compute_instance" "osaka" {
     }
   }
 
-  #   metadata_startup_script = "./init-vm.sh"
-   metadata_startup_script = "sudo apt update;sudo apt upgrade -y;sudo apt install git -y"
+  metadata_startup_script = file("./init-vm.sh")
+  #    metadata_startup_script = "sudo apt update;sudo apt upgrade -y;sudo apt install git -y"
+
+  #   metadata_startup_script = <<-SCRIPT
+  #     #!/bin/bash
+  #     #cat <<-'END' >> /etc/needrestart/needrestart.conf
+  #     #  #add line
+  #     #  $nrconf{restart} = 'a';
+  #     #END
+
+  #     #echo "*** start *** $(date)" >> startup-log.txt
+  #     #apt update >> startup-log.txt 2>&1
+  #     #apt upgrade -y >> startup-log.txt 2>&1
+  #     #apt install -y git >> startup-log.txt 2>&1
+  #     #echo "*** finish *** $(date)" >> startup-log.txt
+
+  #     cat <<-'END' > /home/yukip/init-memo.sh
+  #       #init command memo
+  #       sudo apt update
+  #       sudo apt install -y git
+  #       sudo apt install -y terraform
+  #       sudo apt upgrade -y
+  #     END
+
+  #     chmod 744 /home/yukip/init-memo.sh
+  #     chown yukip:yukip /home/yukip/init-memo.sh
+  #   SCRIPT
+
+
+  # metadata = {
+  #   startup-script = <<-SCRIPT
+  #     #!/bin/bash
+  #     apt update >> startup-log.txt 2>&1
+  #     apt upgrade -y >> startup-log.txt 2>&1
+  #     apt install -y git >> startup-log.txt 2>&1
+  #     date >> test3.txt
+  #   SCRIPT
+  # }
+
+
 
   hostname = "osaka.chottodake.dev"
 
