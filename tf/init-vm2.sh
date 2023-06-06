@@ -37,6 +37,35 @@ sudo apt install -y terraform
 sudo apt install -y vim
 END
 
+if ! test -e /home/$username/yukip.bashrc; then
+    echo "source ~/yukip.bashrc" >> /home/$username/.bashrc
+fi
+
+cat <<'END' > /home/$username/yukip.bashrc
+# timezone
+export TZ=Asia/Tokyo
+
+# history
+HISTSIZE=20000
+HISTFILESIZE=20000
+alias hist='history 20000 | grep -v "hist " | grep --color=never'
+
+# etc
+unalias l
+unalias grep
+alias la='ls -al'
+alias ll='ls -l'
+
+# git
+alias gitlog='git fetch;git log --oneline --graph --all origin/master'
+alias gitcommit='git add .;git commit -m '
+alias gitpush='git push;git push --tags'
+alias gitdiff='git fetch;git diff --name-status master origin/master'
+
+# prompt
+PS1='\n\e[1;33m[$(date +%Y/%m/%d) \t \w]\n\$\e[0m '
+END
+
 chmod 744 /home/$username/init.sh >> $logname 2>&1
 chown $username:$username /home/$username/init.sh >> $logname 2>&1
 
