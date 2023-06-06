@@ -61,3 +61,11 @@ resource "google_compute_firewall" "ssh" {
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["ssh"]
 }
+
+resource "google_compute_project_metadata" "default" {
+  metadata = {
+    ssh-keys = <<EOF
+      yukip:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAUdeHWpkJIfAkqoimFMPxqOEb8Hbq3Fqui4M9yPKAt1 yukip@MacBookAirM2.local
+    EOF
+  }
+}

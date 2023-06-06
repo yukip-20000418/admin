@@ -36,10 +36,11 @@ sudo apt install -y git
 sudo apt install -y terraform
 sudo apt install -y vim
 END
+chmod 744 /home/$username/init.sh >> $logname 2>&1
+chown $username:$username /home/$username/init.sh >> $logname 2>&1
 
 if ! test -e /home/$username/yukip.bashrc; then
     echo "source ~/yukip.bashrc" >> /home/$username/.bashrc
-fi
 
 cat <<'END' > /home/$username/yukip.bashrc
 # timezone
@@ -66,7 +67,8 @@ alias gitdiff='git fetch;git diff --name-status master origin/master'
 PS1='\n\e[1;33m[$(date +%Y/%m/%d) \t \w]\n\$\e[0m '
 END
 
-chmod 744 /home/$username/init.sh >> $logname 2>&1
-chown $username:$username /home/$username/init.sh >> $logname 2>&1
+    chmod 664 /home/$username/yukip.bashrc >> $logname 2>&1
+    chown $username:$username /home/$username/yukip.bashrc >> $logname 2>&1
+fi
 
 echo "$(date) [ FINISH ] metadata_startup_script" >> $logname 2>&1
