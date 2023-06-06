@@ -1,12 +1,12 @@
 # service account
-resource "google_service_account" "osaka" {
-  account_id = "osaka-account"
+resource "google_service_account" "terraform" {
+  account_id = "terraform-account"
   depends_on = [google_project_service.iam]
 }
 
 # compute instance
-resource "google_compute_instance" "osaka" {
-  name = "osaka"
+resource "google_compute_instance" "terraform" {
+  name = "terraform"
   tags = ["ssh"]
 
   machine_type = "e2-medium"
@@ -21,51 +21,49 @@ resource "google_compute_instance" "osaka" {
     }
   }
 
-  metadata_startup_script = file("./init-vm.sh")
-  #    metadata_startup_script = "sudo apt update;sudo apt upgrade -y;sudo apt install git -y"
+  # type-A
+  #   metadata_startup_script = file("./init-vm.sh")
+  # type-A2
+  metadata_startup_script = file("./init-vm2.sh")
 
+  # type-B
   #   metadata_startup_script = <<-SCRIPT
   #     #!/bin/bash
-  #     #cat <<-'END' >> /etc/needrestart/needrestart.conf
-  #     #  #add line
-  #     #  $nrconf{restart} = 'a';
-  #     #END
-
   #     #echo "*** start *** $(date)" >> startup-log.txt
   #     #apt update >> startup-log.txt 2>&1
   #     #apt upgrade -y >> startup-log.txt 2>&1
   #     #apt install -y git >> startup-log.txt 2>&1
   #     #echo "*** finish *** $(date)" >> startup-log.txt
-
-  #     cat <<-'END' > /home/yukip/init-memo.sh
-  #       #init command memo
-  #       sudo apt update
-  #       sudo apt install -y git
-  #       sudo apt install -y terraform
-  #       sudo apt upgrade -y
-  #     END
-
-  #     chmod 744 /home/yukip/init-memo.sh
-  #     chown yukip:yukip /home/yukip/init-memo.sh
   #   SCRIPT
 
+  # type-C
+  #   metadata_startup_script = <<-SCRIPT
+  #     cat <<-'END' > /home/yukip/init.sh
+  #       #init command memo
+  #       sudo apt update
+  #       sudo apt upgrade -y
+  #       sudo apt install -y git
+  #     END
+  #     chmod 744 /home/yukip/init.sh
+  #     chown yukip:yukip /home/yukip/init.sh
+  #   SCRIPT
 
+  # type-D
   # metadata = {
   #   startup-script = <<-SCRIPT
   #     #!/bin/bash
-  #     apt update >> startup-log.txt 2>&1
-  #     apt upgrade -y >> startup-log.txt 2>&1
-  #     apt install -y git >> startup-log.txt 2>&1
-  #     date >> test3.txt
+  #     #echo "*** start *** $(date)" >> startup-log.txt
+  #     #apt update >> startup-log.txt 2>&1
+  #     #apt upgrade -y >> startup-log.txt 2>&1
+  #     #apt install -y git >> startup-log.txt 2>&1
+  #     #echo "*** finish *** $(date)" >> startup-log.txt
   #   SCRIPT
   # }
 
-
-
-  hostname = "osaka.chottodake.dev"
+  hostname = "terraform.chottodake.dev"
 
   service_account {
-    email  = google_service_account.osaka.email
+    email  = google_service_account.terraform.email
     scopes = ["cloud-platform"]
   }
 

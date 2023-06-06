@@ -25,24 +25,12 @@ resource "google_compute_network" "admin" {
   auto_create_subnetworks = false
   depends_on              = [google_project_service.compute]
 }
-resource "google_compute_subnetwork" "tokyo" {
-  name          = "tokyo"
-  ip_cidr_range = "10.1.0.0/16"
-  region        = "asia-northeast1"
-  network       = google_compute_network.admin.id
-}
 resource "google_compute_subnetwork" "osaka" {
   name          = "osaka"
   ip_cidr_range = "10.2.0.0/16"
   region        = "asia-northeast2"
   network       = google_compute_network.admin.id
 }
-# resource "google_compute_subnetwork" "oregon" {
-#   name          = "oregon"
-#   ip_cidr_range = "192.168.1.0/24"
-#   region        = "us-west1"
-#   network       = google_compute_network.admin.id
-# }
 
 # firewall
 resource "google_compute_firewall" "internal" {
