@@ -1,3 +1,8 @@
+# provider
+provider "google" {
+  project = "dev-chottodake-admin"
+  region  = "asia-northeast1"
+}
 # terraform
 terraform {
   backend "gcs" {
