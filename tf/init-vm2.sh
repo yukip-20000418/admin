@@ -46,7 +46,7 @@ if ! test -e /home/$username/yukip.bashrc; then
     cat <<'....END' | sed 's/^ \{8\}//' > /home/$username/yukip.bashrc
         # env
         export TZ=Asia/Tokyo
-        export GOOGLE_APPLICATION_CREDENTIALS=~/key.json
+        # export GOOGLE_APPLICATION_CREDENTIALS=~/key.json
 
         # history
         HISTSIZE=20000
@@ -72,9 +72,9 @@ if ! test -e /home/$username/yukip.bashrc; then
     chmod 664 /home/$username/yukip.bashrc >> $logname 2>&1
     chown $username:$username /home/$username/yukip.bashrc >> $logname 2>&1
 
-    touch /home/$username/key.json >> $logname 2>&1
-    chmod 600 /home/$username/key.json >> $logname 2>&1
-    chown $username:$username /home/$username/key.json >> $logname 2>&1
+    # touch /home/$username/key.json >> $logname 2>&1
+    # chmod 600 /home/$username/key.json >> $logname 2>&1
+    # chown $username:$username /home/$username/key.json >> $logname 2>&1
 fi
 
 echo "$(date) [ FINISH ] metadata_startup_script" >> $logname 2>&1

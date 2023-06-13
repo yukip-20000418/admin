@@ -1,7 +1,6 @@
 # set project
 gcloud config set project dev-chottodake-admin
 
-
 # api & service
 gcloud services list --format='csv(TITLE,NAME)' \
 | awk 'NR>=2 {print}' \
@@ -16,6 +15,6 @@ gcloud services enable serviceusage.googleapis.com
 
 # create bucket
 # gcloud storage buckets create gs://admin.chottodake.dev \
-# --default-storage-class=STANDARD \
-# --location=ASIA-NORTHEAST2 \
+# --default-storage-class="STANDARD" \
+# --location="ASIA-NORTHEAST2" \
 # --uniform-bucket-level-access
