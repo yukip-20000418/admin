@@ -73,4 +73,5 @@ resource "google_compute_project_metadata" "default" {
       yukip:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAUdeHWpkJIfAkqoimFMPxqOEb8Hbq3Fqui4M9yPKAt1 yukip@MacBookAirM2.local
     EOF
   }
+  depends_on = [google_project_service.compute]
 }
