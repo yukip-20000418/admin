@@ -1,5 +1,5 @@
 # provider
-provider "google" {
+provider "google-beta" {
   project     = "dev-chottodake-admin"
   region      = "asia-northeast1"
 }
