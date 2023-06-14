@@ -1,13 +1,14 @@
 # service account
-# resource "google_service_account" "terraform" {
-#   account_id = "terraform-account"
+resource "google_service_account" "terraform" {
+  account_id = "terraform-account"
+  depends_on = [google_project_service.iam]
+}
+
+# data "google_service_account" "terraform_open_test" {
+#   project    = "dev-chottodake-open-test"
+#   account_id = "terraform"
 #   depends_on = [google_project_service.iam]
 # }
-
-data "google_service_account" "terraform" {
-  project    = "dev-chottodake-open-test"
-  account_id = "terraform"
-}
 
 # compute instance
 resource "google_compute_instance" "terraform" {
@@ -26,50 +27,14 @@ resource "google_compute_instance" "terraform" {
     }
   }
 
-  # type-A
-  #   metadata_startup_script = file("./init-vm.sh")
   # type-A2
   metadata_startup_script = file("./init-vm2.sh")
-
-  # type-B
-  #   metadata_startup_script = <<-SCRIPT
-  #     #!/bin/bash
-  #     #echo "*** start *** $(date)" >> startup-log.txt
-  #     #apt update >> startup-log.txt 2>&1
-  #     #apt upgrade -y >> startup-log.txt 2>&1
-  #     #apt install -y git >> startup-log.txt 2>&1
-  #     #echo "*** finish *** $(date)" >> startup-log.txt
-  #   SCRIPT
-
-  # type-C
-  #   metadata_startup_script = <<-SCRIPT
-  #     cat <<-'END' > /home/yukip/init.sh
-  #       #init command memo
-  #       sudo apt update
-  #       sudo apt upgrade -y
-  #       sudo apt install -y git
-  #     END
-  #     chmod 744 /home/yukip/init.sh
-  #     chown yukip:yukip /home/yukip/init.sh
-  #   SCRIPT
-
-  # type-D
-  # metadata = {
-  #   startup-script = <<-SCRIPT
-  #     #!/bin/bash
-  #     #echo "*** start *** $(date)" >> startup-log.txt
-  #     #apt update >> startup-log.txt 2>&1
-  #     #apt upgrade -y >> startup-log.txt 2>&1
-  #     #apt install -y git >> startup-log.txt 2>&1
-  #     #echo "*** finish *** $(date)" >> startup-log.txt
-  #   SCRIPT
-  # }
 
   hostname = "terraform.chottodake.dev"
 
   service_account {
-    # email  = google_service_account.terraform.email
-    email  = data.google_service_account.terraform.email
+    email  = google_service_account.terraform.email
+    # email  = data.google_service_account.terraform_open_test.email
     scopes = ["cloud-platform"]
   }
 

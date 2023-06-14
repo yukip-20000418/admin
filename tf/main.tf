@@ -1,5 +1,5 @@
 # provider
-provider "google-beta" {
+provider "google" {
   project     = "dev-chottodake-admin"
   region      = "asia-northeast1"
 }
@@ -11,6 +11,7 @@ terraform {
     prefix = "tf"
   }
 }
+
 # service
 resource "google_project_service" "cloudresourcemanager" {
   service = "cloudresourcemanager.googleapis.com"

@@ -1,0 +1,36 @@
+  # type-A
+  #   metadata_startup_script = file("./init-vm.sh")
+
+  # type-B
+  #   metadata_startup_script = <<-SCRIPT
+  #     #!/bin/bash
+  #     #echo "*** start *** $(date)" >> startup-log.txt
+  #     #apt update >> startup-log.txt 2>&1
+  #     #apt upgrade -y >> startup-log.txt 2>&1
+  #     #apt install -y git >> startup-log.txt 2>&1
+  #     #echo "*** finish *** $(date)" >> startup-log.txt
+  #   SCRIPT
+
+  # type-C
+  #   metadata_startup_script = <<-SCRIPT
+  #     cat <<-'END' > /home/yukip/init.sh
+  #       #init command memo
+  #       sudo apt update
+  #       sudo apt upgrade -y
+  #       sudo apt install -y git
+  #     END
+  #     chmod 744 /home/yukip/init.sh
+  #     chown yukip:yukip /home/yukip/init.sh
+  #   SCRIPT
+
+  # type-D
+  # metadata = {
+  #   startup-script = <<-SCRIPT
+  #     #!/bin/bash
+  #     #echo "*** start *** $(date)" >> startup-log.txt
+  #     #apt update >> startup-log.txt 2>&1
+  #     #apt upgrade -y >> startup-log.txt 2>&1
+  #     #apt install -y git >> startup-log.txt 2>&1
+  #     #echo "*** finish *** $(date)" >> startup-log.txt
+  #   SCRIPT
+  # }
