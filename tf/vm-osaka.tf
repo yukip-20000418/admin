@@ -1,7 +1,12 @@
 # service account
-resource "google_service_account" "terraform" {
-  account_id = "terraform-account"
-  depends_on = [google_project_service.iam]
+# resource "google_service_account" "terraform" {
+#   account_id = "terraform-account"
+#   depends_on = [google_project_service.iam]
+# }
+
+data "google_service_account" "terraform" {
+  project    = "dev-chottodake-open-test"
+  account_id = "terraform"
 }
 
 # compute instance
@@ -63,7 +68,8 @@ resource "google_compute_instance" "terraform" {
   hostname = "terraform.chottodake.dev"
 
   service_account {
-    email  = google_service_account.terraform.email
+    # email  = google_service_account.terraform.email
+    email  = data.google_service_account.terraform.email
     scopes = ["cloud-platform"]
   }
 

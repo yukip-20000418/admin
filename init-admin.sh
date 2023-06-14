@@ -14,8 +14,8 @@ chmod +x disable-services.sh
 gcloud services enable serviceusage.googleapis.com
 
 # create bucket
-# gcloud storage rm -r gs://admin.chottodake.dev
-# gcloud storage buckets create gs://admin.chottodake.dev \
-# --default-storage-class="STANDARD" \
-# --location="ASIA-NORTHEAST2" \
-# --uniform-bucket-level-access
+gcloud storage rm -r gs://admin.chottodake.dev
+gcloud storage buckets create gs://admin.chottodake.dev \
+--default-storage-class="STANDARD" \
+--location="ASIA-NORTHEAST2" \
+--uniform-bucket-level-access
