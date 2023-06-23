@@ -9,7 +9,10 @@ gcloud config set project dev-chottodake-admin
 gcloud services list --format='csv(TITLE,NAME)' \
 | awk 'NR>=2 {print}' \
 | sort \
-| awk -F, '{printf("# %s\n%s %s %s\n",$1,"gcloud services disable",$2,"--force")}' \
+| awk -F, '{
+  printf("# ")
+  for(i=1;i<NF;++i){printf("%s ",$i)}
+  printf("\ngcloud service disable %s --force\n",$NF)}' \
 > /tmp/disable-services-admin.sh
 
 
