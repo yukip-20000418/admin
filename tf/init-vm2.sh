@@ -1,12 +1,13 @@
 #!/bin/bash
 
+export TZ=Asia/Tokyo
+
 logname="startup-script-log.txt"
 username="ubuntu"
-# username="yukip"
 
 echo "$(date) [ START ] metadata_startup_script" >> $logname 2>&1
 
-for i in {1..60}; do
+for i in {1..180}; do
     if id "$username" >/dev/null 2>&1; then
         break;
     fi
@@ -31,6 +32,7 @@ cat <<'END' | sed 's/^ \{4\}//' > /home/$username/init.sh
         | sudo tee /etc/apt/sources.list.d/hashicorp.list
     fi
 
+    sudo snap remove google-cloud-cli
     sudo apt update
     sudo apt upgrade -y
     sudo apt install -y git
@@ -74,11 +76,8 @@ if ! test -e /home/$username/yukip.bashrc; then
     chown $username:$username /home/$username/yukip.bashrc >> $logname 2>&1
 fi
 
-
-# metadata_response=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/attributes/key")
-# metadata_value=$(echo "$metadata_response" | cut -d'=' -f2)
-
-curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/attributes/key" \
+metadata="http://metadata.google.internal/computeMetadata/v1/instance/attributes"
+curl -H "Metadata-Flavor: Google" "$metadata/key" \
 > /home/$username/key.json
 
 chmod 600 /home/$username/key.json >> $logname 2>&1

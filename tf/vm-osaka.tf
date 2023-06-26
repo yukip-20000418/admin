@@ -4,7 +4,7 @@ resource "google_service_account" "terraform" {
   depends_on = [google_project_service.iam]
 }
 
-resource "google_project_iam_member" "iam_bind" {
+resource "google_project_iam_member" "role" {
   project = "dev-chottodake-open-test"
   role    = "roles/owner"
   member  = "serviceAccount:${google_service_account.terraform.email}"
@@ -12,7 +12,6 @@ resource "google_project_iam_member" "iam_bind" {
 
 resource "google_service_account_key" "key" {
   service_account_id = google_service_account.terraform.name
-#   private_key_type   = "TYPE_GOOGLE_CREDENTIALS_FILE"
 }
 
 # compute instance
@@ -26,30 +25,26 @@ resource "google_compute_instance" "terraform" {
   boot_disk {
     initialize_params {
       #   image = "debian-cloud/debian-11"
-      image = "ubuntu-os-cloud/ubuntu-minimal-2204-jammy-v20230428"
       #   image = "fedora-coreos-cloud/fedora-coreos-38-20230527-3-0-gcp-x86-64"
-      size = "10"
-      type = "pd-balanced"
+      image = "ubuntu-os-cloud/ubuntu-minimal-2204-jammy-v20230428"
+      size  = "10"
+      type  = "pd-balanced"
     }
   }
 
-  # type-A2
   metadata_startup_script = file("./init-vm2.sh")
 
-
   metadata = {
-    # iroiro install sareteta
-    disable_google_packages = "true"
+    # disable_google_packages = "true"
     enable_oslogin = "false"
-    # kore modositemiru
     # install_gcloud = "false"
-    key  = base64decode(google_service_account_key.key.private_key)
+    key = base64decode(google_service_account_key.key.private_key)
   }
 
   hostname = "terraform.chottodake.dev"
 
   service_account {
-    email = google_service_account.terraform.email
+    email  = google_service_account.terraform.email
     scopes = ["cloud-platform"]
   }
 
