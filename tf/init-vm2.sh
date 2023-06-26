@@ -1,7 +1,8 @@
 #!/bin/bash
 
 logname="startup-script-log.txt"
-username="yukip"
+username="ubuntu"
+# username="yukip"
 
 echo "$(date) [ START ] metadata_startup_script" >> $logname 2>&1
 
@@ -78,7 +79,6 @@ fi
 # metadata_value=$(echo "$metadata_response" | cut -d'=' -f2)
 
 curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/attributes/key" \
-| cut -d'=' -f2 \
 > /home/$username/key.json
 
 chmod 600 /home/$username/key.json >> $logname 2>&1

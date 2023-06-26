@@ -36,7 +36,13 @@ resource "google_compute_instance" "terraform" {
   # type-A2
   metadata_startup_script = file("./init-vm2.sh")
 
+
   metadata = {
+    # iroiro install sareteta
+    disable_google_packages = "true"
+    enable_oslogin = "false"
+    # kore modositemiru
+    # install_gcloud = "false"
     key  = base64decode(google_service_account_key.key.private_key)
   }
 
