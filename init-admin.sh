@@ -12,7 +12,7 @@ gcloud services list --format='csv(TITLE,NAME)' \
 | awk -F, '{
   printf("# ")
   for(i=1;i<NF;++i){printf("%s ",$i)}
-  printf("\ngcloud service disable %s --force\n",$NF)}' \
+  printf("\ngcloud services disable %s --force\n",$NF)}' \
 > /tmp/disable-services-admin.sh
 
 
