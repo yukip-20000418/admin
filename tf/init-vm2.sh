@@ -38,6 +38,9 @@ cat <<'END' | sed 's/^ \{4\}//' > /home/$username/init.sh
     sudo apt install -y git
     sudo apt install -y terraform
     sudo apt install -y vim
+
+    ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N "" -C "yukip@chottodake.dev"
+    cat ~/.ssh/id_rsa.pub
 END
 
 chmod 744 /home/$username/init.sh >> $logname 2>&1
