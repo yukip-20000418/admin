@@ -55,9 +55,9 @@ if ! test -e /home/$username/yukip.bashrc; then
         export GOOGLE_APPLICATION_CREDENTIALS=~/key.json
 
         # history
-        HISTSIZE=20000
+        HISTSIZE=200000
         HISTFILESIZE=20000
-        alias hist='history 20000 | grep -v "hist " | grep --color=never'
+        alias hist='history  | grep -v "hist " | grep --color=never'
 
         # etc
         unalias l
@@ -72,7 +72,7 @@ if ! test -e /home/$username/yukip.bashrc; then
         alias gitdiff='git fetch;git diff --name-status master origin/master'
 
         # prompt
-        PS1='\n\e[1;33m[$(date +%Y/%m/%d) \t \w]\n\$\e[0m '
+        PS1='\n\[\e[1;33m\][$(date +%Y/%m/%d) \t \w]\n\$\[\e[0m\] '
 ....END
 
     chmod 664 /home/$username/yukip.bashrc >> $logname 2>&1
