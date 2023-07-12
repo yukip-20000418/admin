@@ -41,9 +41,6 @@ cat <<'END' | sed 's/^ \{4\}//' > /home/$username/init.sh
 
     git config --global user.name "yukip"
     git config --global user.email "yukip@chottodake.dev"
-
-    ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N "" -C "yukip@chottodake.dev"
-    cat ~/.ssh/id_rsa.pub
 END
 
 chmod 744 /home/$username/init.sh >> $logname 2>&1
