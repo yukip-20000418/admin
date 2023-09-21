@@ -7,14 +7,6 @@ username="ubuntu"
 
 echo "$(date) [ START ] metadata_startup_script" >> $logname 2>&1
 
-for i in {1..180}; do
-    if id "$username" >/dev/null 2>&1; then
-        break;
-    fi
-    echo "$(date) $i '$username' not exist" >> $logname 2>&1
-    sleep 1
-done
-
 cat <<'END' | sed 's/^ \{4\}//' > /home/$username/init.sh
     #!/bin/bash
     set -x
@@ -62,8 +54,10 @@ if ! test -e /home/$username/yukip.bashrc; then
         # etc
         unalias l
         unalias grep
-        alias la='ls -al'
+        alias ls='ls --color=always'        
+        alias la='ls -a'
         alias ll='ls -l'
+        alias lla='ls -la'
 
         # git
         alias gitlog='git fetch;git log --oneline --graph --all origin/master'
