@@ -12,8 +12,9 @@ GoogleCloud上でプロジェクトを２つ作成しておく
 3. プロジェクト名とか修正
 4. init-admin.sh 実行
 5. cd tf
-6. terraform plan
-7. terraform apply
+6. terraform init
+7. terraform plan
+8. terraform apply
 
 ## なおさないとメモ
 ### 変数へ切り出すもの
