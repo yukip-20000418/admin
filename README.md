@@ -1,8 +1,22 @@
+## 事前準備
+ローカルPCでキーを作成しておく
+1. ssh-keygen -t ed25519 -C "yukip"           
+
+## 使い方
+1. clone
+2. cd admin
+3. プロジェクト名とか修正
+4. init-admin.sh 実行
+5. cd tf
+6. terraform plan
+7. terraform apply
+
 ## なおさないとメモ
 ### 変数へ切り出すもの
 - main.tf 3  プロジェクト名
 - main.tf 11 バケット名
 - main.tf 76 ssh-key
 - vm-osaka.tf 8 プロジェクト名
-- 
+- init-admin.sh プロジェクト名がある
+
 
